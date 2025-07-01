@@ -10,9 +10,10 @@ package proyecto2;
  */
 public class NodoHT {
     String secuencia;
-    
+    int frecuencia;
     
     public NodoHT(String sec){
         this.secuencia = sec;
+        frecuencia = 0;
     }
 }
