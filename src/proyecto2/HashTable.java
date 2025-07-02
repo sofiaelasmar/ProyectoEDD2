@@ -25,32 +25,32 @@ public class HashTable {
         for (int i = 0; i < secuencia.length(); i++) {
             char c = secuencia.charAt(i);
             int charValue = switch (c) {
-                case 'A' ->
-                    1;
-                case 'T' ->
-                    2;
-                case 'C' ->
-                    3;
-                case 'G' ->
-                    4;
-                default ->
-                    0;
+                case 'A' -> 1;
+                case 'T' -> 2;
+                case 'C' -> 3;
+                case 'G' -> 4;
+                default -> 0;
             };
             hash = primo * hash + charValue;
         }
 
-        return hash;
+        return Math.abs(hash) % size;
     }
 
     public NodoHT buscar(String secuencia) {
         int indice = this.hash(secuencia);
-        NodoHT nodo = this.secuencias[indice];
-        if (nodo != null) {
-            if (nodo.secuencia.equals(secuencia)) {
-                nodo.frecuencia += 1;
+        int originalIndex = indice; 
+
+        while (secuencias[indice] != null) {
+            if (secuencias[indice].secuencia.equals(secuencia)) {
+                return secuencias[indice]; 
+            }
+            indice = (indice + 1) % size;
+            if (indice == originalIndex) {
+                break; 
             }
         }
-        return nodo;
+        return null;
     }
 
     public void añadir(String secuencia) {
@@ -58,8 +58,9 @@ public class HashTable {
         if (nodo == null) {
             int indice = this.hash(secuencia);
             this.secuencias[indice] = new NodoHT(secuencia);
-
+        } else {
+            nodo.frecuencia += 1;
         }
     }
-
 }
+
