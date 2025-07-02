@@ -17,4 +17,25 @@ public class HashTable {
         this.secuencias = new NodoHT[64];
         this.size = 64;
     }
+    
+    public int hash(String secuencia) {
+    int primo = 31; 
+    int hash = 0;
+    
+    for (int i = 0; i < secuencia.length(); i++) {
+        char c = secuencia.charAt(i);
+        int charValue = switch(c) {
+            case 'A' -> 1;
+            case 'T' -> 2;
+            case 'C' -> 3;
+            case 'G' -> 4;
+            default -> 0;
+        };
+        hash = primo * hash + charValue;
+    }
+    
+    return hash;
+}
+    
+    
 }
