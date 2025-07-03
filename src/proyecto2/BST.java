@@ -32,7 +32,7 @@ public class BST {
         } else if (frecuencia > root.frecuencia && !root.cadena.equals(cadena)) {
             root.right = insertRec(root.right, frecuencia, cadena);
         } else {
-            root.cadena = cadena; 
+            root.frecuencia += 1;
         }
 
         return root;
