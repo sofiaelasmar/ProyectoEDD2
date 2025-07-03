@@ -54,19 +54,27 @@ public class BST {
         return searchRec(root.right, frecuencia);
     }
 
-    public List<NodoBST> inorder() {
-        List<NodoBST> result = new ArrayList<>();
-        inorderRec(root, result);
-        return result;
-    }
+public NodoBST[] inorderArray() {
+    int size = countNodes(root);
+    NodoBST[] result = new NodoBST[size];
+    inorderArrayRec(root, result, new int[]{0});
+    return result;
+}
 
-    private void inorderRec(NodoBST root, List<NodoBST> result) {
-        if (root != null) {
-            inorderRec(root.left, result);
-            result.add(root);
-            inorderRec(root.right, result);
-        }
+private int countNodes(NodoBST node) {
+    if (node == null) {
+        return 0;
     }
+    return 1 + countNodes(node.left) + countNodes(node.right);
+}
+
+private void inorderArrayRec(NodoBST node, NodoBST[] array, int[] index) {
+    if (node != null) {
+        inorderArrayRec(node.left, array, index);
+        array[index[0]++] = node;
+        inorderArrayRec(node.right, array, index);
+    }
+}
 
     public NodoBST findMaxFrequent() {
         return findMaxRec(root);
