@@ -8,107 +8,91 @@ package proyecto2;
  *
  * @author iker
  */
+import java.util.ArrayList;
+import java.util.List;
+
 public class BST {
     private NodoBST root;
 
     public BST() {
         this.root = null;
     }
+
     public void insert(int frecuencia, String cadena) {
         root = insertRec(root, frecuencia, cadena);
     }
 
     private NodoBST insertRec(NodoBST root, int frecuencia, String cadena) {
         if (root == null) {
-            root = new NodoBST(frecuencia, cadena);
-            return root;
+            return new NodoBST(frecuencia, cadena);
         }
 
-        if (cadena.compareTo(root.cadena) < 0) {
+        if (frecuencia <= root.frecuencia && !root.cadena.equals(cadena)) {
             root.left = insertRec(root.left, frecuencia, cadena);
-        } else if (cadena.compareTo(root.cadena) > 0) {
+        } else if (frecuencia > root.frecuencia && !root.cadena.equals(cadena)) {
             root.right = insertRec(root.right, frecuencia, cadena);
         } else {
-            root.frecuencia += frecuencia;
+            root.cadena = cadena; 
         }
 
         return root;
     }
 
-    public NodoBST search(String cadena) {
-        return searchRec(root, cadena);
+    public NodoBST search(int frecuencia) {
+        return searchRec(root, frecuencia);
     }
 
-    private NodoBST searchRec(NodoBST root, String cadena) {
-        if (root == null || root.cadena.equals(cadena)) {
+    private NodoBST searchRec(NodoBST root, int frecuencia) {
+        if (root == null || root.frecuencia == frecuencia) {
             return root;
         }
 
-        if (cadena.compareTo(root.cadena) < 0) {
-            return searchRec(root.left, cadena);
+        if (frecuencia <= root.frecuencia) {
+            return searchRec(root.left, frecuencia);
         }
 
-        return searchRec(root.right, cadena);
+        return searchRec(root.right, frecuencia);
     }
 
-    public void inorder() {
-        inorderRec(root);
+    public List<NodoBST> inorder() {
+        List<NodoBST> result = new ArrayList<>();
+        inorderRec(root, result);
+        return result;
     }
 
-    private void inorderRec(NodoBST root) {
+    private void inorderRec(NodoBST root, List<NodoBST> result) {
         if (root != null) {
-            inorderRec(root.left);
-            System.out.println("Patrón: " + root.cadena + ", Frecuencia: " + root.frecuencia);
-            inorderRec(root.right);
+            inorderRec(root.left, result);
+            result.add(root);
+            inorderRec(root.right, result);
         }
     }
 
     public NodoBST findMaxFrequent() {
-        return findMaxFrequentRec(root);
+        return findMaxRec(root);
     }
 
-    private NodoBST findMaxFrequentRec(NodoBST root) {
+    private NodoBST findMaxRec(NodoBST root) {
         if (root == null) {
             return null;
         }
-
-        NodoBST leftMax = findMaxFrequentRec(root.left);
-        NodoBST rightMax = findMaxFrequentRec(root.right);
-
-        NodoBST maxNode = root;
-
-        if (leftMax != null && leftMax.frecuencia > maxNode.frecuencia) {
-            maxNode = leftMax;
+        if (root.right == null) {
+            return root;
         }
-        if (rightMax != null && rightMax.frecuencia > maxNode.frecuencia) {
-            maxNode = rightMax;
-        }
-
-        return maxNode;
+        return findMaxRec(root.right);
     }
 
     public NodoBST findMinFrequent() {
-        return findMinFrequentRec(root);
+        return findMinRec(root);
     }
 
-    private NodoBST findMinFrequentRec(NodoBST root) {
+    private NodoBST findMinRec(NodoBST root) {
         if (root == null) {
             return null;
         }
-
-        NodoBST leftMin = findMinFrequentRec(root.left);
-        NodoBST rightMin = findMinFrequentRec(root.right);
-
-        NodoBST minNode = root;
-
-        if (leftMin != null && leftMin.frecuencia < minNode.frecuencia) {
-            minNode = leftMin;
+        if (root.left == null) {
+            return root;
         }
-        if (rightMin != null && rightMin.frecuencia < minNode.frecuencia) {
-            minNode = rightMin;
-        }
-
-        return minNode;
+        return findMinRec(root.left);
     }
 }
-
