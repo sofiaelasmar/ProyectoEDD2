@@ -14,8 +14,6 @@ public class BST {
     public BST() {
         this.root = null;
     }
-
-    // Método para insertar un nuevo nodo en el BST
     public void insert(int frecuencia, String cadena) {
         root = insertRec(root, frecuencia, cadena);
     }
@@ -31,14 +29,12 @@ public class BST {
         } else if (cadena.compareTo(root.cadena) > 0) {
             root.right = insertRec(root.right, frecuencia, cadena);
         } else {
-            // Si el patrón ya existe, actualizamos la frecuencia
             root.frecuencia += frecuencia;
         }
 
         return root;
     }
 
-    // Método para buscar un patrón en el BST
     public NodoBST search(String cadena) {
         return searchRec(root, cadena);
     }
@@ -55,7 +51,6 @@ public class BST {
         return searchRec(root.right, cadena);
     }
 
-    // Método para listar todos los patrones en orden
     public void inorder() {
         inorderRec(root);
     }
@@ -68,7 +63,6 @@ public class BST {
         }
     }
 
-    // Método para encontrar el patrón más frecuente
     public NodoBST findMaxFrequent() {
         return findMaxFrequentRec(root);
     }
@@ -93,7 +87,6 @@ public class BST {
         return maxNode;
     }
 
-    // Método para encontrar el patrón menos frecuente
     public NodoBST findMinFrequent() {
         return findMinFrequentRec(root);
     }
