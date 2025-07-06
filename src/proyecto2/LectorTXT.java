@@ -52,9 +52,9 @@ public class LectorTXT {
      * @param secuencia La secuencia de ADN a procesar.
      */
     private void procesarSecuencia(String secuencia) {
-        for (int i = 0; i <= secuencia.length() - 3; i++) {
+        for (int i = 0; i <= secuencia.length() - 3; i+=3) {
             String fragmento = secuencia.substring(i, i + 3);
-            hashTable.añadir(fragmento); // Añadir a la tabla hash
+            hashTable.añadir(fragmento);
         }
         for (int i = 0; i < hashTable.size; i++) {
             try {
@@ -63,7 +63,7 @@ public class LectorTXT {
                 continue;
             }
         }
-
+hashTable.imprimirFrecuenciaTotal();
     }
 
     /**

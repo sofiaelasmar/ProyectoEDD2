@@ -20,6 +20,11 @@ public class Inicio extends javax.swing.JFrame {
         bst = new BST();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+        LectorTXT l = new LectorTXT();
+        l.cargarArchivo();
+        bst = l.getBstFrecuencias();
+        ht = l.getHashTable();
+        Ventana_menu vm = new Ventana_menu();
     }
 
     /**

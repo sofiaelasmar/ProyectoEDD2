@@ -24,20 +24,38 @@ public class Ventana_Patrones extends javax.swing.JFrame {
     public void buscarListado() {
         NodoBST[] nodos = Inicio.bst.inorderArray();
         for (NodoBST nodo : nodos) {
-            this.lista.setText(this.lista.getText() + "\n" + nodo.cadena +" --> " +  nodo.frecuencia + " apariciones. ");
+            this.lista.setText(this.lista.getText() + "\n" + nodo.cadena + " --> " + nodo.frecuencia + " apariciones. ");
         }
     }
 
-    
-    public void iniciarJCombo(){
+    public void iniciarJCombo() {
+        this.jComboBox1.removeAllItems();
         NodoBST[] nodos = Inicio.bst.inorderArray();
+        ordenarBurbujaPorCadena(nodos);
         for (NodoBST nodo : nodos) {
-            this.jComboBox1.addItem(nodo.cadena);
+            if (nodo != null) {
+                this.jComboBox1.addItem(nodo.cadena);
+            }
         }
     }
+
+    private void ordenarBurbujaPorCadena(NodoBST[] nodos) {
+        int n = nodos.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (nodos[j] != null && nodos[j + 1] != null
+                        && nodos[j].cadena.compareTo(nodos[j + 1].cadena) > 0) {
+                    NodoBST temp = nodos[j];
+                    nodos[j] = nodos[j + 1];
+                    nodos[j + 1] = temp;
+                }
+            }
+        }
+    }
+
     public void buscar() {
         NodoHT nodo = Inicio.ht.buscar((String) this.jComboBox1.getSelectedItem());
-        this.esp.setText(nodo.secuencia + " --> " +  nodo.frecuencia + " apariciones. ");
+        this.esp.setText(nodo.secuencia + " --> " + nodo.frecuencia + " apariciones. ");
 
     }
 
@@ -114,7 +132,7 @@ public class Ventana_Patrones extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 450, 190));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 560));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

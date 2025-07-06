@@ -12,10 +12,12 @@ public class HashTable {
 
     NodoHT[] secuencias;
     int size;
+    String[][] colisiones;
 
     public HashTable() {
         this.secuencias = new NodoHT[64];
         this.size = 64;
+        this.colisiones = new String[size][size]; 
     }
 
     public int hash(String secuencia) {
@@ -54,13 +56,76 @@ public class HashTable {
     }
 
     public void añadir(String secuencia) {
-        NodoHT nodo = this.buscar(secuencia);
-        if (nodo == null) {
-            int indice = this.hash(secuencia);
-            this.secuencias[indice] = new NodoHT(secuencia);
-        } else {
-            nodo.frecuencia += 1;
+    int indice = this.hash(secuencia);
+    
+    NodoHT nodo = this.buscar(secuencia);
+    
+    if (nodo != null) {
+       
+        nodo.frecuencia += 1;
+    } else {
+        while (secuencias[indice] != null) {
+            for (int j = 0; j < size; j++) {
+                if (colisiones[indice][j] == null) {
+                    colisiones[indice][j] = secuencias[indice].secuencia;
+                    break;
+                }
+            }
+            indice = (indice + 1) % size;
+        }
+        this.secuencias[indice] = new NodoHT(secuencia);
+    }
+}
+
+    public String generarReporteColisiones() {
+        StringBuilder reporte = new StringBuilder();
+        reporte.append("=== REPORTE DE COLISIONES ===\n");
+        reporte.append("Total de slots en tabla: ").append(size).append("\n");
+        reporte.append("Se muestran solo los slots con colisiones\n\n");
+        
+        int totalColisiones = 0;
+        
+        for (int i = 0; i < size; i++) {
+            int colisionesEnSlot = 0;
+            StringBuilder entradasColisionadas = new StringBuilder();
+            
+            for (int j = 0; j < size; j++) {
+                if (colisiones[i][j] != null) {
+                    if (colisionesEnSlot > 0) {
+                        entradasColisionadas.append(", ");
+                    }
+                    entradasColisionadas.append(colisiones[i][j]);
+                    colisionesEnSlot++;
+                }
+            }
+            
+            if (colisionesEnSlot > 0) {
+                totalColisiones += colisionesEnSlot;
+                reporte.append("Slot #").append(i).append(": ")
+                      .append(colisionesEnSlot).append(" colisiones → ")
+                      .append(entradasColisionadas.toString()).append("\n");
+            }
+        }
+        
+        reporte.append("\nTotal de colisiones registradas: ").append(totalColisiones).append("\n");
+        reporte.append("=== FIN DEL REPORTE ===");
+        
+        return reporte.toString();
+    }
+
+public void imprimirFrecuenciaTotal() {
+    int frecuenciaTotal = 0;
+
+    // Recorrer el array de secuencias
+    for (NodoHT nodo : secuencias) {
+        if (nodo != null) {
+            frecuenciaTotal += nodo.frecuencia; // Sumar la frecuencia de cada nodo
         }
     }
+
+    // Imprimir la frecuencia total
+    System.out.println("Frecuencia total de todas las secuencias: " + frecuenciaTotal);
+}
+
 }
 

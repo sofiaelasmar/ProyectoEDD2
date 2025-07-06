@@ -14,6 +14,6 @@ public class NodoHT {
     
     public NodoHT(String sec){
         this.secuencia = sec;
-        frecuencia = 0;
+        frecuencia = 1;
     }
 }
