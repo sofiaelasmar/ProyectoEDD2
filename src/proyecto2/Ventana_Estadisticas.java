@@ -21,6 +21,7 @@ public class Ventana_Estadisticas extends javax.swing.JFrame {
         this.menos.setText( min.cadena + "\nAparcece " + min.frecuencia + " veces en la cadena.");
         NodoBST max = Inicio.bst.findMaxFrequent();
         this.mas.setText( max.cadena + "\nAparcece " + max.frecuencia + " veces en la cadena.");
+        this.reporte.setText(Inicio.ht.generarReporteColisiones());
     }
 
     /**
