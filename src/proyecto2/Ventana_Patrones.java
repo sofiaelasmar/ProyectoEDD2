@@ -19,6 +19,8 @@ public class Ventana_Patrones extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.iniciarJCombo();
         this.buscarListado();
+        Aminoacidos am = new Aminoacidos(Inicio.ht);
+        this.lista1.setText(am.reporte());
     }
 
     public void buscarListado() {
@@ -55,7 +57,7 @@ public class Ventana_Patrones extends javax.swing.JFrame {
 
     public void buscar() {
         NodoHT nodo = Inicio.ht.buscar((String) this.jComboBox1.getSelectedItem());
-        this.esp.setText(nodo.secuencia + " --> " + nodo.frecuencia + " apariciones. ");
+        this.esp.setText(nodo.secuencia + " --> " + nodo.frecuencia + " apariciones. " + "\nIndices de aparicion: " + nodo.aparicionesToString());
 
     }
 
@@ -79,10 +81,14 @@ public class Ventana_Patrones extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         lista = new javax.swing.JTextArea();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        lista1 = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Nirmala UI", 1, 48)); // NOI18N
@@ -119,20 +125,31 @@ public class Ventana_Patrones extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 140, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 30, 140, -1));
 
         jLabel4.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
         jLabel4.setText("Lista de todos los patrones:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 250, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 120, 250, 30));
 
         lista.setColumns(20);
         lista.setFont(new java.awt.Font("Nirmala UI", 2, 24)); // NOI18N
         lista.setRows(5);
         jScrollPane3.setViewportView(lista);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 450, 190));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 450, 190));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 560));
+        lista1.setColumns(20);
+        lista1.setFont(new java.awt.Font("Nirmala UI", 2, 24)); // NOI18N
+        lista1.setRows(5);
+        jScrollPane4.setViewportView(lista1);
+
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 170, 450, 360));
+
+        jLabel5.setFont(new java.awt.Font("Nirmala UI", 1, 18)); // NOI18N
+        jLabel5.setText("Lista de todos los patrones:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 250, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,9 +209,12 @@ public class Ventana_Patrones extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea lista;
+    private javax.swing.JTextArea lista1;
     // End of variables declaration//GEN-END:variables
 }

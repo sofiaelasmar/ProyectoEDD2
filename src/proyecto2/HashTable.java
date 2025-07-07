@@ -8,18 +8,28 @@ package proyecto2;
  *
  * @author sofia
  */
+/**
+ * Clase que implementa una tabla hash para almacenar secuencias de ADN.
+ */
 public class HashTable {
+    public NodoHT[] secuencias; // Array de nodos que almacenan las secuencias
+    public int size; // Tamaño de la tabla
+    private String[][] colisiones; // Matriz para manejar colisiones
 
-    NodoHT[] secuencias;
-    int size;
-    String[][] colisiones;
-
+    /**
+     * Constructor que inicializa la tabla hash.
+     */
     public HashTable() {
         this.secuencias = new NodoHT[64];
         this.size = 64;
         this.colisiones = new String[size][size];
     }
 
+    /**
+     * Función hash para calcular el índice de una secuencia.
+     * @param secuencia Secuencia a hashear.
+     * @return Índice calculado.
+     */
     public int hash(String secuencia) {
         int primo = 31;
         int hash = 0;
@@ -27,16 +37,11 @@ public class HashTable {
         for (int i = 0; i < secuencia.length(); i++) {
             char c = secuencia.charAt(i);
             int charValue = switch (c) {
-                case 'A' ->
-                    1;
-                case 'T' ->
-                    2;
-                case 'C' ->
-                    3;
-                case 'G' ->
-                    4;
-                default ->
-                    0;
+                case 'A' -> 1;
+                case 'T' -> 2;
+                case 'C' -> 3;
+                case 'G' -> 4;
+                default -> 0;
             };
             hash = primo * hash + charValue;
         }
@@ -44,6 +49,11 @@ public class HashTable {
         return Math.abs(hash) % size;
     }
 
+    /**
+     * Busca una secuencia en la tabla hash.
+     * @param secuencia Secuencia a buscar.
+     * @return NodoHT encontrado o null.
+     */
     public NodoHT buscar(String secuencia) {
         int indice = this.hash(secuencia);
         int originalIndex = indice;
@@ -60,23 +70,32 @@ public class HashTable {
         return null;
     }
 
+    /**
+     * Añade una secuencia a la tabla hash.
+     * @param secuencia Secuencia a añadir.
+     * @param index Índice de aparición.
+     */
     public void añadir(String secuencia, int index) {
         int indice = this.hash(secuencia);
 
         NodoHT nodo = this.buscar(secuencia);
 
         if (nodo != null) {
-            nodo.frecuencia += 1;
+            nodo.frecuencia += 1; // Incrementa la frecuencia si ya existe
             nodo.agregarAparicion(index);
         } else {
             while (secuencias[indice] != null) {
-                indice = (indice + 1) % size;
+                indice = (indice + 1) % size; // Manejo de colisiones
             }
             this.secuencias[indice] = new NodoHT(secuencia);
             this.secuencias[indice].agregarAparicion(index);
         }
     }
 
+    /**
+     * Genera un reporte de colisiones en la tabla hash.
+     * @return String con el reporte de colisiones.
+     */
     public String generarReporteColisiones() {
         StringBuilder reporte = new StringBuilder();
         reporte.append("=== REPORTE DE COLISIONES ===\n");
@@ -117,6 +136,9 @@ public class HashTable {
         return reporte.toString();
     }
 
+    /**
+     * Imprime la frecuencia total de todas las secuencias en la tabla.
+     */
     public void imprimirFrecuenciaTotal() {
         int frecuenciaTotal = 0;
 
@@ -130,5 +152,4 @@ public class HashTable {
         // Imprimir la frecuencia total
         System.out.println("Frecuencia total de todas las secuencias: " + frecuenciaTotal);
     }
-
 }

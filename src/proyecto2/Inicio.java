@@ -18,7 +18,7 @@ public class Inicio extends javax.swing.JFrame {
         initComponents();
         ht = new HashTable();
         bst = new BST();
-        this.setVisible(true);
+        this.setVisible(false);
         this.setLocationRelativeTo(null);
         LectorTXT l = new LectorTXT();
         l.cargarArchivo();

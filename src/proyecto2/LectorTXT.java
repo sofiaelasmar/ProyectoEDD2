@@ -14,11 +14,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Clase que se encarga de leer un archivo de texto y procesar secuencias de ADN.
+ */
 public class LectorTXT {
-
     private HashTable hashTable; // Tabla hash para almacenar las secuencias
     private BST bstFrecuencias; // Árbol binario de búsqueda para frecuencias
 
+    /**
+     * Constructor que inicializa la tabla hash y el árbol de frecuencias.
+     */
     public LectorTXT() {
         this.hashTable = new HashTable();
         this.bstFrecuencias = new BST();
@@ -53,7 +58,7 @@ public class LectorTXT {
      */
     private void procesarSecuencia(String secuencia) {
         int j = 0;
-        for (int i = 0; i <= secuencia.length() - 3; i+=3) {
+        for (int i = 0; i <= secuencia.length() - 3; i += 3) {
             String fragmento = secuencia.substring(i, i + 3);
             hashTable.añadir(fragmento, j);
             j++;
@@ -65,7 +70,7 @@ public class LectorTXT {
                 continue;
             }
         }
-hashTable.imprimirFrecuenciaTotal();
+        hashTable.imprimirFrecuenciaTotal();
     }
 
     /**
